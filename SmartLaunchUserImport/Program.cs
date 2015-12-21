@@ -21,7 +21,7 @@ namespace SmartLaunchUserImport
             var user = sl.GetUser("bromleyi");
 
             double money = ((5.00 / 60) * 3) * -1;
-            sl.AddMoney("bromleyi", money);
+            sl.AddMoney("bromleyi", 9.99);
 
 
             var sql = new MySqlHelper();

@@ -25,7 +25,7 @@ namespace Smartlaunch.Api.Service.Controllers
         [HttpGet]
         public ExtendedUser GetUser(string username)
         {
-            var sl = new MySqlHelper();
+            var sl = new Smartlaunch.Api.Client.Smartlaunch();
             return sl.GetUser(username);
         }
 

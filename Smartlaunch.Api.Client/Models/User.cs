@@ -51,6 +51,8 @@ namespace Smartlaunch.Api.Client.Models
         public string PersonalNumber { get; set; }
         public string PasswordHash { get; set; }
 
+        public double Balance { get; set; }
+
         public void SetBirthday(DateTime dob)
         {
             _birthdate = dob;
@@ -61,4 +63,4 @@ namespace Smartlaunch.Api.Client.Models
         }
     }
 
-}
+}
