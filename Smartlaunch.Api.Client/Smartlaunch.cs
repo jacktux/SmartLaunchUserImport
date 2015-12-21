@@ -16,7 +16,7 @@ namespace Smartlaunch.Api.Client
 
         public Smartlaunch()
         {
-            NewConnection("localhost");
+            NewConnection("10.4.7.10");
         }
 
         public Tuple<List<User>, List<ExtendedUser>> GetUsers()

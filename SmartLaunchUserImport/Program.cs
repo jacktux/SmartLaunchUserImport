@@ -15,7 +15,7 @@ namespace SmartLaunchUserImport
         {
             var sl = new Smartlaunch.Api.Client.Smartlaunch();
 
-            //var users = sl.GetUsers();
+            var users = sl.GetUsers();
 
             var user = sl.GetUser("bromleyi");
 

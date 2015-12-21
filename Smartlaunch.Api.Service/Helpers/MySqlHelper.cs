@@ -1,5 +1,4 @@
 ﻿using MySql.Data.MySqlClient;
-using Smartlaunch.Api.Client.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,9 +28,8 @@ namespace SmartLaunchUserImport.Helpers
             }
         }
 
-        public ExtendedUser GetUser(string username)
+        public bool IsValidUser(string username, string password)
         {
-            ExtendedUser user = new ExtendedUser();
             string stm = @"SELECT * FROM Users WHERE Username='" + username + "'";
 
             MySqlCommand cmd = new MySqlCommand(stm, conn);
@@ -39,11 +37,11 @@ namespace SmartLaunchUserImport.Helpers
 
             while (rdr.Read())
             {
-                user.FirstName = rdr.GetString(19);
-                user.PasswordHash = rdr.GetString(2);
+                if (rdr.GetString(2) == GetPasswordHash(password))
+                    return true;
             }
 
-            return user;
+            return false;
         }
 
         public void SetUserPassword(string username, string password)
@@ -67,11 +65,5 @@ namespace SmartLaunchUserImport.Helpers
             return hash;
         }
 
-
-        //public bool Get(string username, string password)
-        //{
-        //    var sl = new MySqlHelper();
-        //    return sl.IsValidUser(username, password);
-        //}
     }
 }
