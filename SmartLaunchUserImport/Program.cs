@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Smartlaunch.Api.Client;
 using Smartlaunch.Api.Client.Models;
 using SmartLaunchUserImport.Helpers;
+using SmartLaunch.Api.Client.Helpers;
 
 namespace SmartLaunchUserImport
 {
@@ -23,8 +24,9 @@ namespace SmartLaunchUserImport
             sl.AddMoney("bromleyi", money);
 
 
-            //var sql = new MySqlHelper();
-            ////var user = sql.GetUser("bromleyi");
+            var sql = new MySqlHelper();
+            sql.SetUserPassword("bromleyi", "apple");
+            //var user = sql.GetUser("bromleyi");
 
             //var ex = new ExcelImporter();
             //var users = ex.ImportUsers();

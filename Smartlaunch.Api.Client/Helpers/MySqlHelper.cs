@@ -1,11 +1,12 @@
 ﻿using MySql.Data.MySqlClient;
+using Smartlaunch.Api.Client.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartLaunchUserImport.Helpers
+namespace SmartLaunch.Api.Client.Helpers
 {
     public class MySqlHelper
     {
@@ -42,6 +43,23 @@ namespace SmartLaunchUserImport.Helpers
             }
 
             return false;
+        }
+
+        public ExtendedUser GetUser(string username)
+        {
+            ExtendedUser user = new ExtendedUser();
+            string stm = @"SELECT * FROM Users WHERE Username='" + username + "'";
+
+            MySqlCommand cmd = new MySqlCommand(stm, conn);
+            rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                user.FirstName = rdr.GetString(19);
+                user.PasswordHash = rdr.GetString(2);
+            }
+
+            return user;
         }
 
         public void SetUserPassword(string username, string password)
