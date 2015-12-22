@@ -15,7 +15,7 @@ namespace SmartLaunch.Api.Client.Helpers
 
         public MySqlHelper()
         {
-            string cs = @"server=10.4.7.11;userid=smartlaunch;
+            string cs = @"server=192.168.1.181;userid=smartlaunch;
             password=Fp3i9C;database=smartlaunch";
 
             try

@@ -29,6 +29,14 @@ namespace Smartlaunch.Api.Service.Controllers
             return sl.GetUser(username);
         }
 
+        [Route("api/addFunds/{username}/{amount}")]
+        [HttpGet]
+        public void AddFunds(string username, double amount)
+        {
+            var sl = new Smartlaunch.Api.Client.Smartlaunch();
+            sl.AddMoney(username, amount);
+        }
+
         [Route("api/changePassword/{username}/{password}")]
         [HttpPut]
         public void ChangePassword(string username, string password)
