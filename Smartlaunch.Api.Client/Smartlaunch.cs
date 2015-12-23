@@ -43,6 +43,12 @@ namespace Smartlaunch.Api.Client
             return extuser;
         }
 
+        public bool AddFunds(string username, double amount)
+        {
+            var response = AddMoney(username, amount);
+            return true;
+        }
+
         public HttpResponseMessage CreateUser(User user)
         {
             var u = JsonConvert.SerializeObject(user);
