@@ -17,8 +17,15 @@ namespace Smartlaunch.Api.Service.Controllers
         [HttpGet]
         public bool UserLogin(string username, string password)
         {
-            var sl = new MySqlHelper();
-            return sl.IsValidUser(username, password);
+            var ms = new MySqlHelper();
+            if (ms.IsValidUser(username, password))
+            {
+                var sl = new Smartlaunch.Api.Client.Smartlaunch();
+                var user = sl.GetUser(username);
+                if (user.Balance > 0)
+                    return true;
+            }
+            return false;
         }
 
         [Route("api/getUser/{username}")]
