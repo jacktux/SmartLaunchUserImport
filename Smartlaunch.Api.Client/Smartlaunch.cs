@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using Smartlaunch.Api.Client.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -16,7 +17,9 @@ namespace Smartlaunch.Api.Client
 
         public Smartlaunch()
         {
-            NewConnection("10.4.7.10");
+            var server = ConfigurationManager.AppSettings.Get("SmartlaunchServer");
+            Console.Out.WriteLine("Smartlaunch Server: " + server);
+            NewConnection(server);
         }
 
         public Tuple<List<User>, List<ExtendedUser>> GetUsers()

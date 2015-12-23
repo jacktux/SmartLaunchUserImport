@@ -2,6 +2,7 @@
 using Smartlaunch.Api.Client.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,8 +16,8 @@ namespace SmartLaunch.Api.Client.Helpers
 
         public MySqlHelper()
         {
-            string cs = @"server=192.168.1.181;userid=smartlaunch;
-            password=Fp3i9C;database=smartlaunch";
+            var server = ConfigurationManager.AppSettings.Get("MySqlServer");
+            string cs = @"server=" + server + ";userid=smartlaunch; password = Fp3i9C; database = smartlaunch";
 
             try
             {
