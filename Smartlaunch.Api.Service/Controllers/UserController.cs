@@ -17,15 +17,19 @@ namespace Smartlaunch.Api.Service.Controllers
         [HttpGet]
         public bool UserLogin(string username, string password)
         {
-            var ms = new MySqlHelper();
-            if (ms.IsValidUser(username, password))
+            bool retVal = false;
+            using (var ms = new MySqlHelper())
             {
-                var sl = new Smartlaunch.Api.Client.Smartlaunch();
-                var user = sl.GetUser(username);
-                if (user.Balance > 0)
-                    return true;
+                if (ms.IsValidUser(username, password))
+                {
+                    var sl = new Smartlaunch.Api.Client.Smartlaunch();
+                    var user = sl.GetUser(username);
+                   // if (user.Balance > 0)
+                        retVal = true;
+                }
             }
-            return false;
+            return retVal;
+
         }
 
         [Route("api/getUser/{username}")]
@@ -33,7 +37,11 @@ namespace Smartlaunch.Api.Service.Controllers
         public ExtendedUser GetUser(string username)
         {
             var sl = new Smartlaunch.Api.Client.Smartlaunch();
-            return sl.GetUser(username);
+            var user =  sl.GetUser(username);
+            // ONLY FOR the 3/1/2016
+            user.Balance = 5;
+
+            return user;
         }
 
         [Route("api/addFunds/{username}")]

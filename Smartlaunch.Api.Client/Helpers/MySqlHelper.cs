@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SmartLaunch.Api.Client.Helpers
 {
-    public class MySqlHelper
+    public class MySqlHelper : IDisposable
     {
         MySqlConnection conn = null;
         MySqlDataReader rdr = null;
@@ -30,6 +30,11 @@ namespace SmartLaunch.Api.Client.Helpers
             }
         }
 
+        public void Dispose()
+        {
+            conn.Close();
+        }
+
         public bool IsValidUser(string username, string password)
         {
             string stm = @"SELECT * FROM Users WHERE Username='" + username + "'";
@@ -40,9 +45,10 @@ namespace SmartLaunch.Api.Client.Helpers
             while (rdr.Read())
             {
                 if (rdr.GetString(2) == GetPasswordHash(password))
+                {
                     return true;
+                }
             }
-
             return false;
         }
 
@@ -66,7 +72,7 @@ namespace SmartLaunch.Api.Client.Helpers
         public void SetUserPassword(string username, string password)
         {
             string sql = @"UPDATE Users
-                           SET PasswordHash = @PasswordHash
+                           SET PasswordHash = @PasswordHash, AccountStatus = 1 , AskAtNextLogin=0
                            WHERE Username = @Username";
             var cmd = new MySqlCommand(sql, conn);
             cmd.Parameters.AddWithValue("@PasswordHash", GetPasswordHash(password));
@@ -79,10 +85,12 @@ namespace SmartLaunch.Api.Client.Helpers
             var enc = Encoding.UTF8;
 
             var SHA1Hasher = new System.Security.Cryptography.SHA1CryptoServiceProvider();
-            var hash = Convert.ToBase64String(SHA1Hasher.ComputeHash(enc.GetBytes(password)));
+            var hash = Convert.ToBase64String(SHA1Hasher.ComputeHash(enc.GetBytes(password.ToLower())));
 
             return hash;
         }
+       
+   
 
     }
 }

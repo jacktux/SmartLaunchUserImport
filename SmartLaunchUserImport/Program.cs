@@ -16,35 +16,48 @@ namespace SmartLaunchUserImport
         {
             var sl = new Smartlaunch.Api.Client.Smartlaunch();
 
-            var users = sl.GetUsers();
+            //var users = sl.GetUsers();
 
-            var user = sl.GetUser("bromleyi");
+            //var user = sl.GetUser("bromleyi");
 
-            double money = ((5.00 / 60) * 3) * -1;
-            sl.AddMoney("bromleyi", 9.99);
+            // double money = ((5.00 / 60) * 3) * -1;
+            //sl.AddMoney("bromleyi", 9.99);
 
 
             var sql = new MySqlHelper();
-            sql.SetUserPassword("bromleyi", "apple");
+            //sql.SetUserPassword("wdadmin", "Fp3i9C");
             //var user = sql.GetUser("bromleyi");
 
-            //var ex = new ExcelImporter();
-            //var users = ex.ImportUsers();
+            var ex = new ExcelImporter();
+            var users1 = ex.ImportUsers();
+            foreach (ExtendedUser user1 in users1)
+            {
+                // var ss = sl.CreateUser(new User()
+                // {
+                //     UserName = user1.PersonalNumber.ToString(),
+                //     UsergroupName = "Members"
+                // });
 
-            //var ss = sl.CreateUser(new User()
-            //{
-            //    UserName = users[0].User.UserId.ToString(),
-            //    UsergroupName = "Members"
-            //});
+                // var tt = sl.UpdateUser(user1.PersonalNumber.ToString(), new ExtendedUser()
+                // {
+                //     FirstName = user1.FirstName,
+                //     LastName = user1.LastName,
+                //    Birthday = user1.Birthday,
 
-            //var tt = sl.UpdateUser(users[0].User.UserId.ToString(), new ExtendedUser()
-            //{
-            //    FirstName = users[0].FirstName,
-            //    LastName = users[0].LastName,
-            //    Birthday = users[0].Birthday,
 
-            //});
+                //});
 
+                //sl.AddMoney(user1.PersonalNumber.ToString(), 5.00);
+                //   sql.SetUserPassword(user1.PersonalNumber.ToString(), user1.Password);
+                var user21 =sl.GetUser(user1.PersonalNumber);
+                var bal = user21.Balance;
+                if (bal<5)
+                {
+                    bal = 5 - bal;
+                    sl.AddMoney(user1.PersonalNumber.ToString(), bal);
+                    Console.Out.WriteLine("user" + user1.PersonalNumber.ToString() + " : " + bal);
+                }
+            }
         }
 
 

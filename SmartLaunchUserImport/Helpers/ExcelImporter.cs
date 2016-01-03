@@ -16,7 +16,7 @@ namespace SmartLaunchUserImport.Helpers
         public List<ExtendedUser> ImportUsers()
         {
             List<ExtendedUser> users = new List<ExtendedUser>();
-            using (FileStream file = new FileStream(@"C:\Users\admin2\Downloads\InternetCafe.xlsx", FileMode.Open, FileAccess.Read))
+            using (FileStream file = new FileStream(@"C:\InternetCafe.xlsx", FileMode.Open, FileAccess.Read))
             {
                 XSSFWorkbook wb = new XSSFWorkbook(file);
                 var sheet = wb.GetSheetAt(0);
@@ -32,6 +32,7 @@ namespace SmartLaunchUserImport.Helpers
                         extuser.SetBirthday(FromExcelSerialDate(Int32.Parse(GetStringValue(sheet.GetRow(row).GetCell(3)))));
                         extuser.State = GetStringValue(sheet.GetRow(row).GetCell(4));
                         extuser.Address = GetStringValue(sheet.GetRow(row).GetCell(5));
+                        extuser.Password = GetStringValue(sheet.GetRow(row).GetCell(6));
                         extuser.Birthday = extuser.GetBirthday();
                         user.UserName = extuser.PersonalNumber;
                         extuser.User = user;
